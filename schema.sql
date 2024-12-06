@@ -1,0 +1,37 @@
+DROP TABLE IF EXISTS Games;
+DROP TABLE IF EXISTS Teams;
+DROP TABLE IF EXISTS Players;
+DROP TABLE IF EXISTS Locations;
+
+CREATE TABLE Teams (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    coach TEXT NOT NULL
+);
+
+CREATE TABLE Players (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    team_id INTEGER NOT NULL,
+    position TEXT NOT NULL,
+    FOREIGN KEY (team_id) REFERENCES Teams(id)
+);
+
+CREATE TABLE Locations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    stadium_name TEXT NOT NULL,
+    city TEXT NOT NULL
+);
+
+CREATE TABLE Games (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    team1_id INTEGER NOT NULL,
+    team2_id INTEGER NOT NULL,
+    location_id INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    team1_score INTEGER NOT NULL,
+    team2_score INTEGER NOT NULL,
+    FOREIGN KEY (team1_id) REFERENCES Teams(id),
+    FOREIGN KEY (team2_id) REFERENCES Teams(id),
+    FOREIGN KEY (location_id) REFERENCES Locations(id)
+);
