@@ -140,6 +140,11 @@ def fetch_report_data(start_date, end_date, location, team):
         cursor.execute(query, params)
         rows = cursor.fetchall()
 
-    # Return results as a pandas DataFrame
+    # Create DataFrame from the results
     columns = ["Date", "Team 1", "Team 2", "Team 1 Score", "Team 2 Score", "Location"]
-    return pd.DataFrame(rows, columns=columns)
+    report_data = pd.DataFrame(rows, columns=columns)
+
+    # Calculate total points and add as a new column
+    report_data["Total Points"] = report_data["Team 1 Score"] + report_data["Team 2 Score"]
+
+    return report_data
