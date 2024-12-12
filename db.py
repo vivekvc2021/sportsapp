@@ -6,6 +6,13 @@ DATABASE = 'sports_management.db'
 def connect_db():
     return sqlite3.connect(DATABASE)
 
+def create_tables():
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        with open('schema.sql', 'r') as f:
+            cursor.executescript(f.read())
+        conn.commit()
+
 def get_teams():
     with connect_db() as conn:
         cursor = conn.cursor()
